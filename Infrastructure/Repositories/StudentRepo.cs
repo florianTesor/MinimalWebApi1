@@ -1,14 +1,13 @@
+using Domain.Models;
 using Microsoft.EntityFrameworkCore;
-using MinimalWebApi1.DbContext;
-using MinimalWebApi1.DbContext.Models;
 
-namespace MinimalWebApi1.Services;
+namespace Infrastructure.Repositories;
 
-public class StudentService : IStudentService
+public class StudentRepo : IStudentRepo
 {
     private readonly SchoolContext _context;
 
-    public StudentService(SchoolContext context)
+    public StudentRepo(SchoolContext context)
     {
         _context = context;
     }
@@ -23,11 +22,12 @@ public class StudentService : IStudentService
         return await _context.Students.ToListAsync();
     }
 
-    public async Task<bool> AddStudentAsync(Student student)
+    public async Task<Student> AddStudentAsync(Student studentToAdd)
     {
-        await _context.Students.AddAsync(student);
+        var entityEntry = await _context.Students.AddAsync(studentToAdd);
+        
         await _context.SaveChangesAsync();
-        return true;
+        return entityEntry.Entity;
     }
 
     public async Task<bool> UpdateStudentAsync(Student student)

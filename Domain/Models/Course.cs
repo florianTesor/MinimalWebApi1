@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace MinimalWebApi1.DbContext.Models;
+namespace Domain.Models;
 
 [Serializable]
 public class Course

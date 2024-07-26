@@ -1,4 +1,4 @@
-namespace MinimalWebApi1.DbContext.Models;
+namespace Domain.Models;
 
 [Serializable]
 public class Grade

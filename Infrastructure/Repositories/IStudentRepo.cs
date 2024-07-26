@@ -1,12 +1,12 @@
-using MinimalWebApi1.DbContext.Models;
+using Domain.Models;
 
-namespace MinimalWebApi1.Services;
+namespace Infrastructure.Repositories;
 
-public interface IStudentService
+public interface IStudentRepo
 {
     Task<Student?> GetStudentByIdAsync(int id);
     Task<IEnumerable<Student>> GetAllStudentsAsync();
-    Task<bool> AddStudentAsync(Student student);
+    Task<Student> AddStudentAsync(Student student);
     Task<bool> UpdateStudentAsync(Student student);
     Task<bool> DeleteStudentAsync(int id);
 }
