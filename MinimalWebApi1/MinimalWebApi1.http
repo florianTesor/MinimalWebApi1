@@ -1,0 +1,10 @@
+@MinimalWebApi1_HostAddress = http://localhost:5190
+
+GET {{MinimalWebApi1_HostAddress}}/api/V1.0/Student/Get/
+Accept: application/json
+
+###
+GET {{MinimalWebApi1_HostAddress}}/api/V1.0/Student/Get/3
+Accept: application/json
+
+###
