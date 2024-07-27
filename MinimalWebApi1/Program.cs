@@ -1,14 +1,23 @@
 using Microsoft.EntityFrameworkCore;
-using MinimalWebApi1.DbContext;
-using MinimalWebApi1.DbContext.Models;
-using MinimalWebApi1.Services;
+using MinimalWebApi1.Core.DbContext;
+using MinimalWebApi1.Core.Services;
+using MinimalWebApi1.Students.Add;
+using MinimalWebApi1.Students.Delete;
+using MinimalWebApi1.Students.GetById;
+using MinimalWebApi1.Students.List;
+using MinimalWebApi1.Students.Update;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    // Use the full name of the type as the schema ID
+    // Because we have same file name in different folders, this option is mandatory for correct schema
+    options.CustomSchemaIds(type => type.FullName); 
+});
 
 builder.Services.AddDbContext<SchoolContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SchoolDb"))
@@ -30,37 +39,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var group = app.MapGroup($"api/{builder.Configuration.GetSection("Version").Value}/{nameof(Student)}");
-
-group.MapGet("/Get",
-    async (IStudentService studentService) =>
-    {
-        var students = await studentService.GetAllStudentsAsync();
-        return Results.Ok(students);
-    }).WithName("GetAllStudents").WithOpenApi();
-
-group.MapGet("/Get/{id}",
-    async (IStudentService studentService, int id) =>
-    {
-        var student = await studentService.GetStudentByIdAsync(id);
-        return student is not null ? Results.Ok(student) : Results.NotFound();
-    }).WithName("GetStudentById").WithOpenApi();
-
-group.MapPut("/Update",
-    async (IStudentService studentService, Student student) =>
-    {
-        var result = await studentService.UpdateStudentAsync(student);
-        return result ? Results.Ok() : Results.NotFound();
-    }).WithName("UpdateStudent").WithOpenApi();
-
-group.MapPost("/Add", 
-    async (IStudentService studentService, Student student) =>
-        await studentService.AddStudentAsync(student)
-        ).WithName("AddStudent").WithOpenApi();
-
-group.MapDelete("/Delete/{id}",
-    async (IStudentService studentService, int id) =>
-        await studentService.DeleteStudentAsync(id)
-        ).WithName("DeleteStudent").WithOpenApi();
+app.MapListStudent()
+    .MapGetStudentById()
+    .MapAddStudent()
+    .MapUpdateStudent()
+    .MapDeleteStudent();
 
 app.Run();

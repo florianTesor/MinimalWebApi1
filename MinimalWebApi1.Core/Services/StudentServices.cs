@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using MinimalWebApi1.DbContext;
-using MinimalWebApi1.DbContext.Models;
+using MinimalWebApi1.Core.DbContext;
+using MinimalWebApi1.Core.Models;
 
-namespace MinimalWebApi1.Services;
+namespace MinimalWebApi1.Core.Services;
 
 public class StudentService : IStudentService
 {
@@ -23,17 +23,17 @@ public class StudentService : IStudentService
         return await _context.Students.ToListAsync();
     }
 
-    public async Task<bool> AddStudentAsync(Student student)
+    public async Task<Student> AddStudentAsync(Student student)
     {
-        await _context.Students.AddAsync(student);
+        var result = await _context.Students.AddAsync(student);
         await _context.SaveChangesAsync();
-        return true;
+        return result.Entity;
     }
 
-    public async Task<bool> UpdateStudentAsync(Student student)
+    public async Task<Student?> UpdateStudentAsync(Student student)
     {
         var studentToUpdate = await _context.Students.FindAsync(student.Id);
-        if (studentToUpdate == null) return false;
+        if (studentToUpdate == null) return null;
 
         studentToUpdate.Name = student.Name;
         studentToUpdate.Lastname = student.Lastname;
@@ -41,9 +41,9 @@ public class StudentService : IStudentService
         studentToUpdate.Email = student.Email;
         studentToUpdate.HasSubscribed = student.HasSubscribed;
 
-        _context.Update(studentToUpdate);
+        var result = _context.Update(studentToUpdate);
         await _context.SaveChangesAsync();
-        return true;
+        return result.Entity;
     }
 
     public async Task<bool> DeleteStudentAsync(int id)

@@ -1,12 +1,12 @@
-using MinimalWebApi1.DbContext.Models;
+using MinimalWebApi1.Core.Models;
 
-namespace MinimalWebApi1.Services;
+namespace MinimalWebApi1.Core.Services;
 
 public interface IStudentService
 {
     Task<Student?> GetStudentByIdAsync(int id);
     Task<IEnumerable<Student>> GetAllStudentsAsync();
-    Task<bool> AddStudentAsync(Student student);
-    Task<bool> UpdateStudentAsync(Student student);
+    Task<Student> AddStudentAsync(Student student);
+    Task<Student?> UpdateStudentAsync(Student student);
     Task<bool> DeleteStudentAsync(int id);
 }

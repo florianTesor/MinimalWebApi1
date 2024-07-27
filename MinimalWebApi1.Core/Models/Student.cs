@@ -1,4 +1,4 @@
-namespace MinimalWebApi1.DbContext.Models;
+namespace MinimalWebApi1.Core.Models;
 
 public class Student
 {
@@ -17,4 +17,19 @@ public class Student
     //Navigations properties
     // public ICollection<Grade> Grades { get; set; } = new List<Grade>();
 
+
+    public Student()
+    {
+        
+    }
+
+    public Student(int id, string name, string lastname, string email, DateTime birthdate, bool hasSubscribed)
+    {
+        Id = id;
+        Name = name;
+        Lastname = lastname;
+        Email = email;
+        Birthdate = birthdate;
+        HasSubscribed = hasSubscribed;
+    }
 }
