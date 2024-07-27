@@ -1,4 +1,70 @@
-/MinimalWebApi1/obj/*
-/MinimalWebApi1/.idea/*
-/MinimalWebApi1/bin/*
+# Ignore build outputs and intermediate files
+**/bin/
+**/obj/
+
+# User-specific files
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+
+# Rider/JetBrains specific files
+.idea/
+
+# Visual Studio specific files
+.vscode/
+.vs/
+*.sln.ide/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+!packages/build/
+!packages/repositories.config
+
+# DotNet-specific files
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ASP.NET Runtime-generated files
+*.log
+*.pid
+*.svclog
+
+# Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Ignore node_modules, npm debug log and yarn error log
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Ignore environment variables
+.env
+
+# MacOS-specific files
+.DS_Store
+
+# By default, .NET, .NET Core, ASP.NET, and ASP.NET Core
+# projects store their test results in these folders.
+TestResults/
+
 
