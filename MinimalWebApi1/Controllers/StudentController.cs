@@ -16,7 +16,7 @@ namespace MinimalWebApi1.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet("Get")]
         public async Task<ActionResult<IEnumerable<StudentDto>>> GetAllStudents()
         {
             var query = new GetAllStudentsCommand();
@@ -24,7 +24,7 @@ namespace MinimalWebApi1.Controllers
             return Ok(students);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("Get/{id}")]
         public async Task<ActionResult<StudentDto>> GetStudentById(int id)
         {
             var query = new GetStudentByIdCommand(id);
@@ -36,7 +36,7 @@ namespace MinimalWebApi1.Controllers
             return Ok(student);
         }
 
-        [HttpPost]
+        [HttpPost ("Add")]
         public async Task<ActionResult<StudentDto>> AddStudent(StudentDto studentDto)
         {
             var command = new AddStudentCommand(studentDto);
@@ -44,7 +44,7 @@ namespace MinimalWebApi1.Controllers
             return CreatedAtAction(nameof(GetStudentById), new { id = student.Id }, student);
         }
 
-        [HttpPut]
+        [HttpPut("Update")]
         public async Task<ActionResult> UpdateStudent(StudentDto studentDto)
         {
             var command = new UpdateStudentCommand(studentDto);
@@ -56,7 +56,7 @@ namespace MinimalWebApi1.Controllers
             return Ok();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("Delete/{id}")]
         public async Task<ActionResult> DeleteStudent(int id)
         {
             var command = new DeleteStudentCommand(id);
